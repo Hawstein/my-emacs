@@ -1,0 +1,10 @@
+;;emacs参数
+;; -nw  不使用图形界面  -no-window
+;; -q   不加载配置文件
+;; --debug-init
+
+;;;; 添加Emacs搜索路径
+(add-to-list 'load-path "~/_emacs")
+;;;; 读取脚本
+(load "base.el")                             
+(load "addon.el")
