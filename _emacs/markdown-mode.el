@@ -27,7 +27,7 @@
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation; either version 2, or (at your option)
-;; any later version.
+t;; any later version.
 
 ;; This program is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -1332,7 +1332,6 @@ it in the usual way."
       (markdown-follow-wiki-link-at-point)
     (markdown-do-normal-return)))
 
-
 
 ;;; Keymap ====================================================================
 
@@ -1368,7 +1367,11 @@ it in the usual way."
     ;; Indentation
     (define-key map "\C-m" 'markdown-enter-key)
     ;; Visibility cycling
-    (define-key map (kbd "<tab>") 'markdown-cycle)
+    ;;(define-key map (kbd "<tab>") 'markdown-cycle)
+	;; Tab what i want. By Hawstein 
+	(define-key map (kbd "<tab>") 'my-indent-region)
+	(define-key map (kbd "C-<tab>") 'my-unindent-region)
+	
     (define-key map (kbd "<S-iso-lefttab>") 'markdown-shifttab)
     ;; Header navigation
     (define-key map (kbd "C-M-n") 'outline-next-visible-heading)
@@ -1983,6 +1986,7 @@ This is an exact copy of `line-number-at-pos' for use in emacs21."
   ;; Indentation and filling
   (make-local-variable 'fill-nobreak-predicate)
   (add-hook 'fill-nobreak-predicate 'markdown-nobreak-p)
+  ;;不要重定义indent-line-function
   (setq indent-line-function markdown-indent-function)
 
   ;; Prepare hooks for XEmacs compatibility
@@ -2019,3 +2023,19 @@ This is an exact copy of `line-number-at-pos' for use in emacs21."
 (provide 'markdown-mode)
 
 ;;; markdown-mode.el ends here
+
+;; Hawstein's indent a region & deindent a region
+;; 对于单行情况下的my-unindent-region没定义，直接用退格键删除TAB
+(defun my-indent-region (N)
+  (interactive "p")
+  (if mark-active
+	  (progn (indent-rigidly (min (mark) (point)) (max (mark) (point)) (* N 4))
+			 (setq deactivate-mark nil))
+	(insert-tab)))
+
+(defun my-unindent-region (N)
+  (interactive "p")
+  (if mark-active
+	  (progn (indent-rigidly (min (mark) (point)) (max (mark) (point)) (* N -4))
+			 (setq deactivate-mark nil))
+	))
