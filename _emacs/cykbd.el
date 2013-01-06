@@ -52,15 +52,19 @@
     (if (or (or (string= suffix "cc") (string= suffix "cpp")) (string= suffix "CPP")) (setq compiler (concat "g++ -g -o " progname " ")))
     (if (string= suffix "tex") (setq compiler "latex "))
 	(if (string= suffix "py") (setq compiler "python "))
+	(if (string= suffix "java") (setq compiler "javac "))
     (compile (concat compiler filename))))
 
 (defun onekey-run ()
   "run the program"
   (interactive)
-  (let (filename progname cmd))
+  (let (filename progname cmd suffix))
   (setq filename (file-name-nondirectory buffer-file-name))
   (setq progname (file-name-sans-extension filename))
-  (setq cmd (concat "./" progname))
+  (setq suffix (file-name-extension filename))
+  (if (string= suffix "java")
+	  (setq cmd (concat "java " progname))
+	(setq cmd (concat "./" progname)))
   (shell-command cmd)
   )
 
@@ -176,3 +180,7 @@
 (interactive) 
 (move-end-of-line 1) 
 (newline-and-indent))) 
+
+;;重新定义 下一个buffer和上一个buffer的快捷键
+(global-set-key [C-right] 'next-buffer)
+(global-set-key [C-left] 'previous-buffer)
