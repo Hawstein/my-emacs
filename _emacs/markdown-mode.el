@@ -1371,6 +1371,8 @@ it in the usual way."
 	;; Tab what i want. By Hawstein 
 	(define-key map (kbd "<tab>") 'my-indent-region)
 	(define-key map (kbd "C-<tab>") 'my-unindent-region)
+	;; set mask after paste. By Hawstein
+	(define-key map (kbd "C-y") 'my-paste)
 	
     (define-key map (kbd "<S-iso-lefttab>") 'markdown-shifttab)
     ;; Header navigation
@@ -2039,3 +2041,19 @@ This is an exact copy of `line-number-at-pos' for use in emacs21."
 	  (progn (indent-rigidly (min (mark) (point)) (max (mark) (point)) (* N -4))
 			 (setq deactivate-mark nil))
 	))
+
+;; 粘贴后使粘贴内容处于选中状态 by Hawstein
+(defun my-paste ()
+  (interactive)
+  (let ((beg (point)))
+	(setq m (make-marker))
+	(set-marker m beg)
+	(yank)
+	;;(exchange-point-and-mark)
+	)
+  )
+;; (defun my-paste ()
+;;   (interactive)
+;;   (set-mark-command (point))
+;;   (yank)
+;;   )
