@@ -124,7 +124,7 @@
 ;; (setq tab-stop-list (cons (* x 4) tab-stop-list)))
 
 ;;设置默认工作目录
-(setq default-directory "~/work/") 
+(setq default-directory "~/") 
 
 ;;===============================================================
 ;;外观设置

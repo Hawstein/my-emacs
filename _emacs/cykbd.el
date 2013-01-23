@@ -175,7 +175,7 @@
 ;;(global-set-key (kbd "“" ) 'skeleton-pair-insert-maybe)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;直接Ctrl＋回车 进入新的一行，光标不必要行尾
+;;直接Ctrl＋回车 进入新的一行，光标不必在行尾
 (global-set-key [M-return] '(lambda () 
 (interactive) 
 (move-end-of-line 1) 
