@@ -99,12 +99,12 @@
 ;;设置F11快捷键指定Emacs 的日历系统
 (global-set-key [S-f11] 'calendar) 
 
-;;设置C-F12 快速察看日程安排
+;;设置Shift-F12 快速察看日程安排
 ;;F12调到函数定义
 (global-set-key [f12] 'semantic-ia-fast-jump)
-(global-set-key [C-f12] 'list-bookmarks)
-;;shift-f12跳回去
-(global-set-key [S-f12]
+(global-set-key [S-f12] 'list-bookmarks)
+;;Ctrl-f12跳回去
+(global-set-key [C-f12]
 	(lambda ()
 	(interactive)
 	(if (ring-empty-p (oref semantic-mru-bookmark-ring ring))
@@ -175,12 +175,27 @@
 ;;(global-set-key (kbd "“" ) 'skeleton-pair-insert-maybe)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;直接Ctrl＋回车 进入新的一行，光标不必在行尾
+;;直接Alt＋回车 进入新的一行，光标不必在行尾
 (global-set-key [M-return] '(lambda () 
 (interactive) 
 (move-end-of-line 1) 
-(newline-and-indent))) 
+(newline-and-indent)))
+
 
 ;;重新定义 下一个buffer和上一个buffer的快捷键
 (global-set-key [C-right] 'next-buffer)
 (global-set-key [C-left] 'previous-buffer)
+
+;; rename file and buffer
+(defun rename-file-and-buffer (new-name)
+ "Renames both current buffer and file it's visiting to NEW-NAME." (interactive "sNew name: ")
+ (let ((name (buffer-name))
+	(filename (buffer-file-name)))
+ (if (not filename)
+	(message "Buffer '%s' is not visiting a file!" name)
+ (if (get-buffer new-name)
+	 (message "A buffer named '%s' already exists!" new-name)
+	(progn 	 (rename-file name new-name 1) 	 (rename-buffer new-name) 	 (set-visited-file-name new-name) 	 (set-buffer-modified-p nil)))))) ;;
+
+
+(global-set-key (kbd "M-r") 'rename-file-and-buffer)
