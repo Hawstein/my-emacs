@@ -1053,13 +1053,22 @@ If Transient Mark mode is on and a region is active, it is made italic."
     (markdown-wrap-or-insert "*" "*"))
   (backward-char 1))
 
-(defun markdown-insert-code ()
+(defun markdown-insert-emphasis ()
   "Insert markup for an inline code fragment.
 If Transient Mark mode is on and a region is active, it is marked
 as inline code."
   (interactive)
   (markdown-wrap-or-insert "`" "`")
   (backward-char 1))
+
+;; by Hawstein
+(defun markdown-insert-code ()
+  (interactive)
+  (insert "{% highlight cpp %}")
+  (newline)
+  (insert "{% endhighlight %}")
+  (previous-line)
+  (backward-char 2))
 
 (defun markdown-insert-link ()
   "Insert an inline link of the form []().
@@ -1351,8 +1360,10 @@ it in the usual way."
     (define-key map "\C-c\C-ss" 'markdown-insert-bold)
     (define-key map "\C-c\C-pi" 'markdown-insert-italic)
     (define-key map "\C-c\C-se" 'markdown-insert-italic)
-    (define-key map "\C-c\C-pf" 'markdown-insert-code)
-    (define-key map "\C-c\C-sc" 'markdown-insert-code)
+	;; by Hawstein
+    (define-key map "\C-cc" 'markdown-insert-code)
+	(define-key map "\C-c\C-e" 'markdown-insert-emphasis)
+	
     (define-key map "\C-c\C-sb" 'markdown-insert-blockquote)
     (define-key map "\C-c\C-s\C-b" 'markdown-blockquote-region)
     (define-key map "\C-c\C-sp" 'markdown-insert-pre)
