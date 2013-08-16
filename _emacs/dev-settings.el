@@ -1,6 +1,6 @@
 ;; -*- Emacs-Lisp -*-
 
-;; Time-stamp: <2011-11-12 21:01:40 星期六 by cy>
+;; Time-stamp: <2013-08-15 13:42:39 Thursday by hawstein>
 
 ;; This  file is free  software; you  can redistribute  it and/or
 ;; modify it under the terms of the GNU General Public License as
@@ -75,7 +75,7 @@
                          (buffer-string))))
       (save-excursion
         (let* ((old-point (point)))
-          (insert (if current-line current-line "")  "{\n")
+          (insert (if current-line current-line "")  " {\n") ;; by Hawstein. 让左括号前留一个空格
           (and lines (insert lines))
           (move-marker after-point (point))
           (insert "\n}")

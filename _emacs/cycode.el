@@ -170,7 +170,6 @@
 (setq skeleton-pair t)
 
 (global-set-key (kbd "\'") 'skeleton-pair-insert-maybe)
-
 ;;
 
 ;;==========================================================
